@@ -1,0 +1,29 @@
+import React from 'react';
+import { Text, View } from 'react-native';
+
+const Header = (props) => {
+    const { textStyle, viewStyle } = styles;
+    return (
+        <View style={viewStyle}>
+            <Text style={textStyle}>{props.headerText}</Text>
+        </View>
+    )
+};
+//justifyContent: vertical direction
+//alignItems: horizontal direction
+const styles = {
+    viewStyle: {
+        backgroundColor: '#F8F8F8',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 60,
+        elevation: 5, // android does not support shadow property, use elevation
+        position: 'relative'
+    },
+    textStyle: {
+        fontSize: 20
+    }
+}
+
+// Make the component available to other parts of the app
+export { Header };
