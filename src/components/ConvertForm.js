@@ -14,9 +14,9 @@ class ConvertForm extends Component {
             showFromModal: false, 
             showToModal: false,
             fromCurrency: 'CAD',
-            fromCurrencySelect: 'false',
+            fromCurrencySelect: false,
             toCurrency: 'USD',
-            toCurrencySelect: 'false',
+            toCurrencySelect: false,
             currency: '',
             serverAPI: {
                 base: 'CAD',
@@ -63,7 +63,7 @@ class ConvertForm extends Component {
         this.setState( this.state.showFromModal ? { showFromModal: false } : { showToModal: false })
     }
 
-     countryPress(currencyCode) {
+     countryOnPress(currencyCode) {
         if(currencyCode) {
             this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect })
         } else {
@@ -89,6 +89,7 @@ class ConvertForm extends Component {
                             flagList={flagList}
                             fromCurrency ={this.state.fromCurrency}
                             fromCurrencySelect={this.state.fromCurrencySelect}
+                            countryOnPress={this.countryOnPress.bind(this)}
                         />
 
                         {/*FromCurrency*/}

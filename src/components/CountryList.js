@@ -23,7 +23,7 @@ class ConturyList extends Component {
             <ScrollView>
                 {this.props.rates && Object.keys(this.props.rates).map((currencyCode) => {
                     return (
-                        <TouchableOpacity key={currencyCode} onPress={() => this.countryPress(currencyCode)}> 
+                        <TouchableOpacity key={currencyCode} onPress={() => this.props.countryPress(currencyCode)}> 
                             <CardSection style={{borderRadius: 4, borderWidth: 0.5, borderColor: '#d6d7da', height: 130}}>
                                 <Image style={{alignSelf: 'flex-end'}} source={this.props.flagList[currencyCode].flag}/>   
                                 <Text style={{paddingLeft: 20, fontSize: 18, paddingTop: 15}}>{this.props.flagList[currencyCode].label}</Text>
@@ -37,12 +37,8 @@ class ConturyList extends Component {
     }
 
    
-        
-       
-    
-    
     render() {
-        const { visible, closeModal, rates, flagList, fromCurrency, fromCurrencySelect } = this.props;
+        const { visible, closeModal, rates, flagList, fromCurrency, fromCurrencySelect, countryOnPress } = this.props;
         return (
             <Modal
                 visible={visible}
