@@ -15,7 +15,7 @@ class ConvertForm extends Component {
             showToModal: false,
             fromCurrency: 'CAD',
             fromCurrencySelect: 'false',
-            toCurrency: 'CAD',
+            toCurrency: 'USD',
             toCurrencySelect: 'false',
             currency: '',
             serverAPI: {
@@ -63,6 +63,14 @@ class ConvertForm extends Component {
         this.setState( this.state.showFromModal ? { showFromModal: false } : { showToModal: false })
     }
 
+     countryPress(currencyCode) {
+        if(currencyCode) {
+            this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect })
+        } else {
+            this.setState({ toCurrency: currencyCode, toCurrencySelect: !this.state.toCurrencySelect })
+        }
+    }
+
     render() {
         console.log(flagList);
         const { currencyTextStyle, cardStyle } = styles;
@@ -74,12 +82,15 @@ class ConvertForm extends Component {
                         <Button onPress={() => this.setState({ showFromModal: !this.state.showFromModal })}>
                             
                         </Button>
-                        <CountryList 
+                        <CountryList
                             visible={this.state.showFromModal}
                             closeModal={this.closeModal.bind(this)}
                             rates={this.state.serverAPI.rates}
                             flagList={flagList}
+                            fromCurrency ={this.state.fromCurrency}
+                            fromCurrencySelect={this.state.fromCurrencySelect}
                         />
+
                         {/*FromCurrency*/}
                         <Text style={currencyTextStyle}>
                             {this.props.digit}
@@ -99,10 +110,7 @@ class ConvertForm extends Component {
                          <Button onPress={() => this.setState({ showToModal: !this.state.showToModal })}>
                             
                         </Button>
-                        <CountryList 
-                            visible={this.state.showToModal}
-                            closeModal={this.closeModal.bind(this)}
-                        />
+                    
                         <Text style={currencyTextStyle}>
                             {this.props.digit}
                         </Text>

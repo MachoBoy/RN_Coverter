@@ -18,12 +18,12 @@ class ConturyList extends Component {
     //     this.props.fetchRateService();
     // }
 
-    renderItemList() { 
+    renderItemList(fromCurrency) { 
         return(
             <ScrollView>
                 {this.props.rates && Object.keys(this.props.rates).map((currencyCode) => {
                     return (
-                        <TouchableOpacity key={currencyCode}> 
+                        <TouchableOpacity key={currencyCode} onPress={() => this.countryPress(currencyCode)}> 
                             <CardSection style={{borderRadius: 4, borderWidth: 0.5, borderColor: '#d6d7da', height: 130}}>
                                 <Image style={{alignSelf: 'flex-end'}} source={this.props.flagList[currencyCode].flag}/>   
                                 <Text style={{paddingLeft: 20, fontSize: 18, paddingTop: 15}}>{this.props.flagList[currencyCode].label}</Text>
@@ -36,22 +36,13 @@ class ConturyList extends Component {
         )
     }
 
-    // countryPress(currencyCode) { 
-    //     if(this.state.fromCurrency) {
-    //         this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect }, key={currencyCode})
-    //     } else {
-    //         this.setState({ toCurrency: currencyCode, toCurrencySelect: !this.state.toCurrencySelect })
-    //     }
-    // }
+   
         
-        // this.setState(startCurrency ? {startCurrency: countryDollarCode, startCurrencySelecting: false} : {toCurrency: countryDollarCode, toCurrencySelecting: false})} 
-        //     key={countryDollarCode} style={[{height: 50, alignItems: 'center', justifyContent: 'center'}, 
-        //     countryDollarCode === (startCurrency ? this.state.startCurrency : this.state.toCurrency) && {backgroundColor: common.colors.background}]}>
-        // console.log(currencyCode);
+       
     
     
     render() {
-        const { visible, closeModal, rates, flagList } = this.props;
+        const { visible, closeModal, rates, flagList, fromCurrency, fromCurrencySelect } = this.props;
         return (
             <Modal
                 visible={visible}
@@ -61,7 +52,7 @@ class ConturyList extends Component {
             >
             <View>
                 <Header HeaderText={"Country List"} />
-                    {this.renderItemList()} 
+                    {this.renderItemList(fromCurrency)} 
             </View>
             
                 
