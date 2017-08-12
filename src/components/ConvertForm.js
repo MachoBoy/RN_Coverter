@@ -63,16 +63,24 @@ class ConvertForm extends Component {
         this.setState( this.state.showFromModal ? { showFromModal: false } : { showToModal: false })
     }
 
-     countryOnPress(currencyCode) {
-        if(currencyCode) {
-            this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect })
+    countryOnPress(fromCurrency, toCurrency, currencyCode) {
+        if( fromCurrency || toCurrency ) {
+            this.setState({ fromCurrency: currencyCode })
+            console.log(this.state.fromCurrency);
+            this.closeModal();
         } else {
-            this.setState({ toCurrency: currencyCode, toCurrencySelect: !this.state.toCurrencySelect })
+            this.setState({ toCurrency: currencyCode })
         }
     }
 
+    swapCurrency() {
+        this.setState({ 
+            fromCurrency: this.state.toCurrency, 
+            toCurrency: this.state.fromCurrency 
+        })
+    }
+
     render() {
-        console.log(flagList);
         const { currencyTextStyle, cardStyle } = styles;
         return (
             <View>
@@ -111,7 +119,15 @@ class ConvertForm extends Component {
                          <Button onPress={() => this.setState({ showToModal: !this.state.showToModal })}>
                             
                         </Button>
-                    
+                        <CountryList
+                            visible={this.state.showFromModal}
+                            closeModal={this.closeModal.bind(this)}
+                            rates={this.state.serverAPI.rates}
+                            flagList={flagList}
+                            toCurrency ={this.state.toCurrency}
+                            toCurrencySelect={this.state.toCurrencySelect}
+                            countryOnPress={this.countryOnPress.bind(this)}
+                        />
                         <Text style={currencyTextStyle}>
                             {this.props.digit}
                         </Text>
