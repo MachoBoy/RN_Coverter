@@ -17,15 +17,12 @@ class Numpad extends Component {
     onButtonPress(digit) {
         switch(digit) {
             case 'clear':
-                console.log('clear');
                 this.props.numberClear();
                 break;
             case 'erase':
-                console.log('erase');
                 this.props.numberErase();
                 break;
             default:
-                console.log(digit);
                 this.props.numberChange(digit);
                 break;
         }
@@ -70,8 +67,12 @@ const styles = {
         height: 256
     },
     numberpadRow: {
+        //backgroundColor: '#FFFFFF',
         flexDirection: 'row',
         height: 64,
+        // borderRadius: 4, 
+        // borderWidth: 0.5, 
+        // borderColor: '#21b432',
     },
 
     textStyle: {

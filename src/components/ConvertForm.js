@@ -63,13 +63,16 @@ class ConvertForm extends Component {
         this.setState( this.state.showFromModal ? { showFromModal: false } : { showToModal: false })
     }
 
-    countryOnPress(fromCurrency, toCurrency, currencyCode) {
-        if( fromCurrency || toCurrency ) {
-            this.setState({ fromCurrency: currencyCode })
-            console.log(this.state.fromCurrency);
-            this.closeModal();
-        } else {
-            this.setState({ toCurrency: currencyCode })
+    countryListOnPress(currency) {
+        switch(currency) {
+            case 'fromCurrency':
+                this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect });
+                this.closeModal();
+            case 'toCurrency':
+                this.setState({ toCurrency: currencyCode, toCurrencySelect: !this.state.toCurrencySelect });
+                this.closeModal();
+            default:
+                this.setState({ fromCurrency: 'CAD', toCurrency: 'USD' });
         }
     }
 
@@ -80,6 +83,11 @@ class ConvertForm extends Component {
         })
     }
 
+    calculateRate(input, fromCurrency, toCurrency) {
+        const exchangeRate = fromCurrency / toCurrency;
+        return ( input * exchangeRate );
+    }
+
     render() {
         const { currencyTextStyle, cardStyle } = styles;
         return (
@@ -87,8 +95,11 @@ class ConvertForm extends Component {
                 <Header headerText={"Currency Converter"} />
                 <Card>
                     <CardSection> 
-                        <Button onPress={() => this.setState({ showFromModal: !this.state.showFromModal })}>
-                            
+                        <Button 
+                            flagList={flagList}
+                            fromCurrency={this.state.fromCurrency}
+                        >
+                        {this.state.fromCurrency}
                         </Button>
                         <CountryList
                             visible={this.state.showFromModal}
@@ -97,7 +108,7 @@ class ConvertForm extends Component {
                             flagList={flagList}
                             fromCurrency ={this.state.fromCurrency}
                             fromCurrencySelect={this.state.fromCurrencySelect}
-                            countryOnPress={this.countryOnPress.bind(this)}
+                            countryOnPress={this.countryListOnPress.bind(this)}
                         />
 
                         {/*FromCurrency*/}
@@ -116,18 +127,18 @@ class ConvertForm extends Component {
 
                     {/*ToCurrency*/}
                     <CardSection>
-                         <Button onPress={() => this.setState({ showToModal: !this.state.showToModal })}>
-                            
+                         <Button>
+                          
                         </Button>
                         <CountryList
-                            visible={this.state.showFromModal}
+                            visible={this.state.showToModal}
                             closeModal={this.closeModal.bind(this)}
                             rates={this.state.serverAPI.rates}
                             flagList={flagList}
                             toCurrency ={this.state.toCurrency}
                             toCurrencySelect={this.state.toCurrencySelect}
-                            countryOnPress={this.countryOnPress.bind(this)}
-                        />
+                            countryOnPress={this.countryListOnPress.bind(this)}
+                        /> 
                         <Text style={currencyTextStyle}>
                             {this.props.digit}
                         </Text>

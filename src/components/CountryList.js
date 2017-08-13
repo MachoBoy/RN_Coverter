@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection, Button, Header } from './common';
-import ListItem from './ListItem';
 import { fetchRateService } from '../actions';
 
 class ConturyList extends Component {
@@ -34,7 +33,18 @@ class ConturyList extends Component {
 
    
     render() {
-        const { visible, closeModal, rates, flagList, fromCurrency, fromCurrencySelect, countryOnPress } = this.props;
+        const { 
+            visible, 
+            closeModal, 
+            rates, 
+            flagList, 
+            fromCurrency, 
+            fromCurrencySelect,
+            toCurrency,
+            toCurrencySelect,
+            countryOnPress, 
+        } = this.props;
+
         return (
             <Modal
                 visible={visible}
@@ -42,12 +52,11 @@ class ConturyList extends Component {
                 animationType="slide"
                 onRequestClose={() => {this.props.closeModal()}}
             >
-            <View>
-                <Header HeaderText={"Country List"} />
-                    {this.renderItemList(fromCurrency)} 
-            </View>
+                <View>
+                    <Header HeaderText={"Country List"} />
+                        {this.renderItemList(fromCurrency, toCurrency)} 
+                </View>
             
-                
             </Modal>
         );
     }

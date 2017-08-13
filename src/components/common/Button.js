@@ -1,15 +1,14 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, TouchableHighlight, Image } from 'react-native';
 
-const Button = ( {onPress, children} ) => {
+const Button = ( {onPress, children, flagList, fromCurrency} ) => {
     const { buttonStyle, textStyle } = styles;
-
     return (
-        <TouchableOpacity onPress={onPress} style={buttonStyle}>
-            <Text style={textStyle}>
-                {children}
-            </Text>
-        </TouchableOpacity>
+        <TouchableHighlight onPress={onPress} style={buttonStyle}>
+           <Text>
+               {children}
+           </Text>
+        </TouchableHighlight>
     );
 };
 
