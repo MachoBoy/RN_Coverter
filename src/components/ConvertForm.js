@@ -57,24 +57,38 @@ class ConvertForm extends Component {
                 }
             }
         }
+        this.closeModal = this.closeModal.bind(this);
+        this.countryListOnPress = this.countryListOnPress.bind(this);
+        this.swapCurrency = this.swapCurrency.bind(this);
     }
 
     closeModal() {
         this.setState( this.state.showFromModal ? { showFromModal: false } : { showToModal: false })
     }
 
-    countryListOnPress(currency) {
-        switch(currency) {
-            case 'fromCurrency':
-                this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect });
-                this.closeModal();
-            case 'toCurrency':
-                this.setState({ toCurrency: currencyCode, toCurrencySelect: !this.state.toCurrencySelect });
-                this.closeModal();
-            default:
-                this.setState({ fromCurrency: 'CAD', toCurrency: 'USD' });
-        }
+    countryListOnPress(currencyCode) {
+        this.setState(this.state.fromCurrency ? { fromCurrencySelect: !this.state.fromCurrencySelect } : { toCurrencySelect: !this.state.toCurrencySelect })
+
+        this.closeModal();
     }
+
+    // countryListOnPress(currency, currencyCode) {
+    //     switch(currency) {
+    //         case 'fromCurrency':
+    //             this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect });
+    //             this.closeModal();
+    //         case 'toCurrency':
+    //             this.setState({ toCurrency: currencyCode, toCurrencySelect: !this.state.toCurrencySelect });
+    //             this.closeModal();
+    //         default:
+    //             this.setState({ fromCurrency: 'CAD', toCurrency: 'USD' });
+    //     }
+    // }
+
+    // fromCurrencyOnPress() { this.state.countryListOnPress('fromCurrency'); }
+
+    // toCurrencyOnPress() { this.state.countryListOnPress('toCurrency'); }
+
 
     swapCurrency() {
         this.setState({ 
@@ -98,17 +112,18 @@ class ConvertForm extends Component {
                         <Button 
                             flagList={flagList}
                             fromCurrency={this.state.fromCurrency}
+                            onPress={() => this.setState({ showFromModal: !this.state.showFromModal })}
                         >
                         {this.state.fromCurrency}
                         </Button>
                         <CountryList
                             visible={this.state.showFromModal}
-                            closeModal={this.closeModal.bind(this)}
+                            closeModal={this.closeModal}
                             rates={this.state.serverAPI.rates}
                             flagList={flagList}
                             fromCurrency ={this.state.fromCurrency}
                             fromCurrencySelect={this.state.fromCurrencySelect}
-                            countryOnPress={this.countryListOnPress.bind(this)}
+                            countryListOnPress={this.countryListOnPress}
                         />
 
                         {/*FromCurrency*/}
@@ -122,12 +137,13 @@ class ConvertForm extends Component {
                         <Image 
                             style={{width: 50, height: 50 }}
                             source={require('../images/exchange.png')}
+                            onPress={this.swapCurrency}
                         />
                     </View>
 
                     {/*ToCurrency*/}
                     <CardSection>
-                         <Button>
+                         <Button onPress={() => this.setState({ showToModal: !this.state.showToModal })}>
                           
                         </Button>
                         <CountryList
@@ -137,7 +153,7 @@ class ConvertForm extends Component {
                             flagList={flagList}
                             toCurrency ={this.state.toCurrency}
                             toCurrencySelect={this.state.toCurrencySelect}
-                            countryOnPress={this.countryListOnPress.bind(this)}
+                            countryListOnPress={this.countryListOnPress.bind(this)}
                         /> 
                         <Text style={currencyTextStyle}>
                             {this.props.digit}

@@ -13,12 +13,12 @@ import { fetchRateService } from '../actions';
 
 class ConturyList extends Component {
 
-    renderItemList(fromCurrency, toCurrency) { 
+    renderItemList() { 
         return(
             <ScrollView>
                 {this.props.rates && Object.keys(this.props.rates).map((currencyCode) => {
                     return (
-                        <TouchableOpacity key={currencyCode} onPress={() => this.props.countryOnPress(currencyCode)}> 
+                        <TouchableOpacity key={currencyCode} onPress={() => this.props.countryListOnPress(currencyCode)}> 
                             <CardSection style={{borderRadius: 4, borderWidth: 0.5, borderColor: '#d6d7da', height: 130}}>
                                 <Image style={{alignSelf: 'flex-end'}} source={this.props.flagList[currencyCode].flag}/>   
                                 <Text style={{paddingLeft: 20, fontSize: 18, paddingTop: 15}}>{this.props.flagList[currencyCode].label}</Text>
@@ -42,7 +42,7 @@ class ConturyList extends Component {
             fromCurrencySelect,
             toCurrency,
             toCurrencySelect,
-            countryOnPress, 
+            countryListOnPress, 
         } = this.props;
 
         return (
@@ -54,7 +54,7 @@ class ConturyList extends Component {
             >
                 <View>
                     <Header HeaderText={"Country List"} />
-                        {this.renderItemList(fromCurrency, toCurrency)} 
+                        {this.renderItemList()} 
                 </View>
             
             </Modal>
