@@ -15,8 +15,10 @@ class ConvertForm extends Component {
             showToModal: false,
             fromCurrency: 'CAD',
             fromCurrencySelect: false,
+            fromCurrencyRate: 0,
             toCurrency: 'USD',
             toCurrencySelect: false,
+            toCurrencyRate: 0,
             currency: '',
             serverAPI: {
                 base: 'CAD',
@@ -60,35 +62,30 @@ class ConvertForm extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.countryListOnPress = this.countryListOnPress.bind(this);
         this.swapCurrency = this.swapCurrency.bind(this);
+        this.calculateRate = this.calculateRate.bind(this);
     }
 
     closeModal() {
         this.setState( this.state.showFromModal ? { showFromModal: false } : { showToModal: false })
     }
 
-    countryListOnPress(currencyCode) {
-        this.setState(this.state.fromCurrency ? { fromCurrencySelect: !this.state.fromCurrencySelect } : { toCurrencySelect: !this.state.toCurrencySelect })
+    countryListOnPress(fromCurrency, currencyCode) {
+        this.setState(fromCurrency ? { fromCurrencySelect: !this.state.fromCurrencySelect } : { toCurrencySelect: !this.state.toCurrencySelect })
+        console.log('fromCurrency', this.state.fromCurrencySelect);
+        console.log('toCurrency', this.state.toCurrencySelect);
+        if( fromCurrency ) {
+            this.setState({ fromCurrencyRate: this.state.serverAPI.rates[currencyCode] })
+        } else {
+            this.setState({ toCurrencyRate: this.state.serverAPI.rates[currencyCode] })
+        }
 
+        //calculateRate(this.props.digit, this.state.fromCurrency, this.state.toCurrency);
+
+        console.log(this.state.fromCurrencyRate);
+        console.log(this.state.toCurrencyRate);
+        
         this.closeModal();
     }
-
-    // countryListOnPress(currency, currencyCode) {
-    //     switch(currency) {
-    //         case 'fromCurrency':
-    //             this.setState({ fromCurrency: currencyCode, fromCurrencySelect: !this.state.fromCurrencySelect });
-    //             this.closeModal();
-    //         case 'toCurrency':
-    //             this.setState({ toCurrency: currencyCode, toCurrencySelect: !this.state.toCurrencySelect });
-    //             this.closeModal();
-    //         default:
-    //             this.setState({ fromCurrency: 'CAD', toCurrency: 'USD' });
-    //     }
-    // }
-
-    // fromCurrencyOnPress() { this.state.countryListOnPress('fromCurrency'); }
-
-    // toCurrencyOnPress() { this.state.countryListOnPress('toCurrency'); }
-
 
     swapCurrency() {
         this.setState({ 

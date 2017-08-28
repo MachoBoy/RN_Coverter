@@ -4,6 +4,8 @@ import {
     NUMBER_ERASE
 } from '../actions/types';
 
+const MAX_LENGTH = 9;
+
 const INITIAL_STATE = {
     digit: ''
 };
@@ -11,7 +13,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case NUMBER_CHANGE:
-            return { ...state, digit: state.digit + action.payload };
+            return { ...state, digit: state.digit.length < MAX_LENGTH && state.digit + action.payload };
         case NUMBER_CLEAR:
             return INITIAL_STATE;
         case NUMBER_ERASE:
